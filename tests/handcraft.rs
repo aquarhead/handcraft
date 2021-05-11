@@ -42,7 +42,6 @@ struct Bar {
 
 #[test]
 fn nested() {
-  // also test for trailing comma
   let crafted = handcraft!(Bar { x: Foo { a: 0 } });
   let expected = Bar {
     x: Foo {
@@ -74,4 +73,30 @@ fn existing_rest() {
   };
 
   assert_eq!(crafted, expected);
+}
+
+#[derive(Debug, Default, PartialEq)]
+struct Baz {
+  v: Vec<Foo>,
+}
+
+#[test]
+fn vec_fields_into() {
+  let crafted = handcraft!(Baz {
+    v: [Foo { a: 0 }].into()
+  });
+  let expected = Baz {
+    v: vec![Foo {
+      a: 0,
+      ..Default::default()
+    }],
+  };
+
+  assert_eq!(crafted, expected);
+}
+
+#[test]
+fn fail() {
+  let t = trybuild::TestCases::new();
+  t.compile_fail("tests/fail/*.rs");
 }

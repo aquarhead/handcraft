@@ -19,9 +19,17 @@ let crafted = Foo {
 
 See more in [tests](tests/handcraft.rs).
 
+## Known Issues
+
+When using `handcraft!`, structs in nested macro calls such as `vec!` can't be handled by the outer macro, hence they'll error with "missing field".
+
+This is illustrated by [this fail-to-compile test](tests/fail/vec_fields.rs).
+
+But specifically for `vec!` cases, it can be trivially avoided by changing `vec![...]` to `[...].into()`. As shown by the `vec_fields_into` test here.
+
 ## Misc
 
-The idea forms when writing a Kubernetes operator with [`kube-rs`](https://github.com/clux/kube-rs).
+The idea forms when writing a Kubernetes operator with [`kube-rs`](https://github.com/clux/kube-rs), where I need to build several large, nested structs that maps to kubernetes resources.
 
 The code is much inspired by [`autodefault`](https://github.com/Lucretiel/autodefault) but I wanted a different usage style (attribute vs. function-like macro).
 
