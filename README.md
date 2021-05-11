@@ -25,7 +25,7 @@ When using `handcraft!`, structs in nested macro calls such as `vec!` can't be h
 
 This is illustrated by [this fail-to-compile test](tests/fail/vec_fields.rs).
 
-But specifically for `vec!` cases, it can be trivially avoided by changing `vec![...]` to `[...].into()`. As shown by the `vec_fields_into` test here.
+But specifically for `vec!` cases, it can be trivially avoided by changing `vec![...]` to `[...].into()`. As shown by the `vec_fields_into` test.
 
 ## Misc
 
