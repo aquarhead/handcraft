@@ -96,6 +96,21 @@ fn vec_fields_into() {
 }
 
 #[test]
+fn vec_fields_nested() {
+  let crafted = handcraft!(Baz {
+    v: vec![handcraft!(Foo { a: 0 })]
+  });
+  let expected = Baz {
+    v: vec![Foo {
+      a: 0,
+      ..Default::default()
+    }],
+  };
+
+  assert_eq!(crafted, expected);
+}
+
+#[test]
 fn fail() {
   let t = trybuild::TestCases::new();
   t.compile_fail("tests/fail/*.rs");
